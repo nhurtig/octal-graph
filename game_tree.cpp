@@ -2,7 +2,10 @@
 #include <cmath>
 
 uint8_t nimber(Graph G, uint8_t *rules, uint8_t rulesLen) {
-    return mex(nimber_set(G, copy_array(rules, rulesLen), rulesLen, rules, rulesLen, G.vertices, std::unordered_set<uint8_t>(), true));
+    uint8_t *rulesPrime = copy_array(rules, rulesLen);
+    uint8_t ans =  mex(nimber_set(G, rulesPrime, rulesLen, rules, rulesLen, G.vertices, std::unordered_set<uint8_t>(), true));
+    free(rulesPrime);
+    return ans;
 }
 
 std::unordered_set<uint8_t> nimber_set(Graph G, uint8_t *rules, uint8_t rulesLen, uint8_t *rulesOrig, uint8_t rulesLenOrig,
@@ -15,6 +18,9 @@ std::unordered_set<uint8_t> nimber_set(Graph G, uint8_t *rules, uint8_t rulesLen
 
     // otherwise, remove a vertex
     for (uint8_t v : can_remove) {
+        if (cant_remove.count(v)) {
+            continue;
+        }
         Graph Gprime = G.copy();
         Gprime.removeVertex(v);
         uint8_t nComp = Gprime.countComponents();
@@ -43,9 +49,9 @@ std::unordered_set<uint8_t> nimber_set(Graph G, uint8_t *rules, uint8_t rulesLen
                                             can_remove_prime, cant_remove_prime, false)) {
             nimbers_so_far.insert(nimber);
         }
+        free(rulesPrime);
     }
 
-    free(rules);
     return nimbers_so_far;
 }
 

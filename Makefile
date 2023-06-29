@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall -Werror -Ofast
 
 all: main
 

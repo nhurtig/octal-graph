@@ -42,7 +42,27 @@ void Graph::removeVertex(uint8_t v) {
 }
 
 uint8_t Graph::countComponents() {
-    return 1;
+    uint8_t ncomps = 0;
+    std::unordered_set<uint8_t> unvisited (this->vertices.begin(), this->vertices.end());
+    std::unordered_set<uint8_t> queued;
+    while (unvisited.size()) {
+        ncomps++;
+        uint8_t v = *unvisited.begin();
+        unvisited.erase(v);
+        queued = std::unordered_set<uint8_t>{v};
+        while (queued.size()) {
+            v = *queued.begin();
+            queued.erase(v);
+            for (uint8_t y : this->neighbors(v)) {
+                if (unvisited.count(y)) {
+                    unvisited.erase(y);
+                    queued.insert(y);
+                }
+            }
+        }
+    }
+
+    return ncomps;
 }
 
 
