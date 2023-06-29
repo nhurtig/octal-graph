@@ -14,9 +14,13 @@ public:
 
     Graph(uint8_t numVerts);
 
+    Graph copy();
+
     void addEdge(uint8_t x, uint8_t y);
 
     std::unordered_set<uint8_t> neighbors(uint8_t v);
+
+    uint8_t countComponents();
 
     void removeVertex(uint8_t v);
 
