@@ -65,15 +65,6 @@ uint8_t sum_array(uint8_t *rules, uint8_t rulesLen) {
     return s;
 }
 
-uint8_t power_2(uint8_t p) {
-    uint8_t x = 1;
-    while (p > 0) {
-        x *= 2;
-        p--;
-    }
-    return x;
-}
-
 uint8_t mex(std::unordered_set<uint8_t> S) {
     uint8_t i = 0;
     while(S.count(i)) {

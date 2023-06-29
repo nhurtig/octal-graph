@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "game_tree.h"
 
 int main(int argc, char **argv) {
     Graph G = path(200);

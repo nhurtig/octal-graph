@@ -6,13 +6,14 @@
 
 // Adjacency set representation
 class Graph {
-private:
+public:
     std::unordered_map<uint8_t, std::unordered_set<uint8_t>> adjacency;
 
-public:
     std::unordered_set<uint8_t> vertices;
 
     Graph(uint8_t numVerts);
+
+    Graph(std::unordered_map<uint8_t, std::unordered_set<uint8_t>> adjacency, std::unordered_set<uint8_t> vertices);
 
     Graph copy();
 
@@ -23,8 +24,6 @@ public:
     uint8_t countComponents();
 
     void removeVertex(uint8_t v);
-
-    void removeVertices(std::unordered_set<uint8_t> V);
 };
 
 Graph path(uint8_t numVerts);

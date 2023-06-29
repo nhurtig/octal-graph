@@ -13,9 +13,11 @@ memcheck: main
 clean:
 	rm *.o main
 
-main: main.o graph.o
-	$(CC) $(CFLAGS) -o main main.o graph.o
+main: main.o graph.o game_tree.o
+	$(CC) $(CFLAGS) -o main main.o graph.o game_tree.o
 
-main.o: graph.h
+main.o: graph.h game_tree.h
 
 graph.o: graph.h
+
+game_tree.o: game_tree.h graph.h

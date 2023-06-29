@@ -10,6 +10,24 @@ Graph::Graph(uint8_t numVerts) {
     }
 }
 
+Graph::Graph(std::unordered_map<uint8_t, std::unordered_set<uint8_t>> adjacency, std::unordered_set<uint8_t> vertices) {
+    this->adjacency = adjacency;
+    this->vertices = vertices;
+}
+
+
+Graph Graph::copy() {
+    std::unordered_map<uint8_t, std::unordered_set<uint8_t>> adjacencyPrime = std::unordered_map<uint8_t, std::unordered_set<uint8_t>>();
+    for (const auto& pair : this->adjacency) {
+        std::unordered_set<uint8_t> adjPrime (pair.second.begin(), pair.second.end());
+        adjacencyPrime[pair.first] = adjPrime;
+    }
+
+    std::unordered_set<uint8_t> verticesPrime (this->vertices.begin(), this->vertices.end());
+
+    return Graph(adjacencyPrime, verticesPrime);
+}
+
 void Graph::addEdge(uint8_t x, uint8_t y) {
     this->adjacency[x].insert(y);
     this->adjacency[y].insert(x);
@@ -23,11 +41,10 @@ void Graph::removeVertex(uint8_t v) {
     this->vertices.erase(v);
 }
 
-void Graph::removeVertices(std::unordered_set<uint8_t> V) {
-    for (uint8_t v : V) {
-        this->removeVertex(v);
-    }
+uint8_t Graph::countComponents() {
+    return 1;
 }
+
 
 Graph path(uint8_t numVerts) {
     Graph path (numVerts);
