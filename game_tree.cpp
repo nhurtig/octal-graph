@@ -2,6 +2,7 @@
 #include <cmath>
 
 uint8_t nimber(Graph G, uint8_t *rules, uint8_t rulesLen) {
+    // printf("in nimber: G.vertices.size()=%ld\n", G.vertices.size());
     uint8_t *rulesPrime = copy_array(rules, rulesLen);
     uint8_t ans =  mex(nimber_set(G, rulesPrime, rulesLen, rules, rulesLen, G.vertices, std::unordered_set<uint8_t>(), true));
     free(rulesPrime);
@@ -22,7 +23,9 @@ std::unordered_set<uint8_t> nimber_set(Graph G, uint8_t *rules, uint8_t rulesLen
             continue;
         }
         Graph Gprime = G.copy();
+        // printf("Gprime.vertices.size()=%ld, removing %d, count is %ld\n", Gprime.vertices.size(), v, Gprime.vertices.count(v));
         Gprime.removeVertex(v);
+        // printf("after removal: %ld\n", Gprime.vertices.size());
         uint8_t nComp = Gprime.countComponents();
         // is this a valid end to my turn?
         if ((nComp < 8) && ((1 << nComp) & rules[0])) {
@@ -45,7 +48,7 @@ std::unordered_set<uint8_t> nimber_set(Graph G, uint8_t *rules, uint8_t rulesLen
         
         // recurse
         uint8_t *rulesPrime = copy_array(rules+1, rulesLen-1);
-        for (uint8_t nimber : nimber_set(G, rulesPrime, rulesLen-1, rulesOrig, rulesLenOrig, 
+        for (uint8_t nimber : nimber_set(Gprime, rulesPrime, rulesLen-1, rulesOrig, rulesLenOrig, 
                                             can_remove_prime, cant_remove_prime, false)) {
             nimbers_so_far.insert(nimber);
         }
